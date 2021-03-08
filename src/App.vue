@@ -36,7 +36,7 @@ export default {
             this.$router.push({ name: 'Log In'})
           }
         }
-        document.title = `DFC | ${to.name}` || "DFC";
+        document.title = `DFC | ${to.name}` || 'DFC';
       }
     },
   },
