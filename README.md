@@ -1,24 +1,28 @@
-# dfc
+https://dirtyfilthycu.lt Frontend
+=================================
+Powered by Vue.js
+---------------------------------
 
-## Project setup
+---------------------------------
+
+## Setup
+
+### Set up project
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Compile and hot-reload for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Compile and minify for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Lint and fix files
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

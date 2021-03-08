@@ -3,11 +3,12 @@
     <div class="index-summary">
       <div class="index-summary-text">
         <h1 class="novecento heading">
-          the largest unofficial
-          forts community</h1>
+          404</h1>
         <p class="fira description">
-          The Dirty Filthy Cult is the largest unofficial
-          community for FORTS, a physics-based RTS game.
+          The page you requested either does not exist or Joe forgot to implement it again.
+        </p>
+        <p class="fira description">
+          Here's a button back home, for those of you who are too lazy to use a navigation bar:
         </p>
       </div>
       <div class="index-summary-graphic">
@@ -19,7 +20,7 @@
 
 <script>
 export default {
-  name: "Index",
+  name: "NotFound",
 }
 </script>
 
