@@ -1,5 +1,7 @@
 <template>
-  <p>Test</p>
+  <main>
+    <p>Test</p>
+  </main>
 </template>
 
 <script>
@@ -9,5 +11,7 @@ export default {
 </script>
 
 <style scoped>
-
+main {
+  margin: 0;
+}
 </style>
