@@ -1,28 +1,64 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Navigation />
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+import axios from 'axios'
+import Navigation from "./components/Navigation"
+
+/* eslint-disable no-unused-vars */
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    Navigation
+  },
+
+  data() {
+    return {
+      news: null,
+      newsEndpoint: '/api/news'
+    }
+  },
+
+  created() {
+    this.getNews()
+  },
+
+  methods: {
+    getNews() {
+      axios.get(this.newsEndpoint, {
+        params: {
+          limit: "15"
+        }
+      })
+        .then(response => {
+          this.news = response.data
+        })
+        .catch(_ => {
+          console.log("Could not fetch user data.")
+        })
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="css">
+
+* {
+  box-sizing: border-box;
 }
+
+html, body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+
+}
+
 </style>
