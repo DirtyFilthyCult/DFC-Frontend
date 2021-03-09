@@ -4,11 +4,11 @@
       <router-link to="/" custom v-slot="{navigate}">
         <img @click="navigate" src="/assets/logo.png" alt="DFC Logo"/>
       </router-link>
-      <router-link to="/" custom v-slot="{navigate}">
+      <router-link to="/" custom v-slot="{navigate}" class="mobile-hide">
         <a @click="navigate" class="novecento text text-dfc">dfc</a>
       </router-link>
     </div>
-    <div class="nav-group nav-group-right">
+    <div class="nav-group nav-group-right mobile-hide">
       <router-link to="/titles" custom v-slot="{navigate}">
         <a @click="navigate" class="novecento text text-dfc">titles</a>
       </router-link>
@@ -28,6 +28,7 @@
         <a @click="navigate" class="novecento text">profile</a>
       </router-link>
     </div>
+
   </nav>
 </template>
 
@@ -49,7 +50,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 3.5rem;
   width: 100%;
   padding: 0 1rem;
   border-bottom: 5px solid black;

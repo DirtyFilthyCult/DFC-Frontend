@@ -56,7 +56,7 @@ export default {
           this.$store.commit('setNews', response.data)
         })
         .catch(_ => {
-          console.log("Could not fetch user data.")
+          console.log("Could not fetch latest news data.")
         })
     }
   }
@@ -106,12 +106,12 @@ main {
 
 .index-summary {
   position: relative;
-  padding: 0 2rem;
+  padding: 0rem 2rem 2rem;
   background-color: var(--bg-accent);
   width: 90%;
 }
 .index-summary-text {
-  width: 50%;
+  width: 60%;
 }
 .index-summary-graphic {
   background-color: var(--dark-red);
@@ -135,43 +135,86 @@ main {
 .heading {
   margin-top: 1rem;
   color: white;
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 
 .description {
   color: white;
   line-height: 150%;
-  font-size: 2rem;
+  font-size: 1.5rem;
+}
+
+.button {
+  color: white;
+  padding-bottom: .7rem;
+  border: none;
+  font-size: 2.5rem;
+  background-color: var(--dark-red);
+  min-width: 50%;
 }
 
 @media only screen and (max-width: 1500px) {
-  .index-summary-text {
-  }
-
   .heading {
-    font-size: 2rem;
+    font-size: 1.85rem;
   }
   .description {
     font-size: 1.3rem;
   }
+
+  .button {
+    min-width: 80%;
+    font-size: 2rem;
+  }
 }
 
+/* Mobile viewports */
 @media only screen and (max-width: 950px) {
-  .index-summary-graphic {
-    display: none;
+  .mobile-hide {
+    display: none !important;
   }
-  .index-summary-text {
+
+  .index-summary {
     width: 100%;
-    text-align: center;
+  }
+
+  .index-summary-text {
+    position: relative;
+    padding-bottom: 1.5rem;
+    width: 100%;
   }
 
   .heading {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
   }
   .description {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
+  }
+
+  .button {
+    position: absolute;
+    margin-left: auto;
+    min-width: 80%;
+    font-size: 1.5rem;
+    padding-bottom: .4rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  nav {
+    height: 4rem !important;
   }
 }
 
+/* Button hover effect on non-mobile viewports */
+@media only screen and (min-width: 950px) {
+  .button:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    transition: .2s;
+  }
 
+  .button:active {
+    transform: scale(0.98);
+  }
+}
 </style>

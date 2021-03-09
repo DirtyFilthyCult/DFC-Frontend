@@ -10,8 +10,11 @@
         <p class="fira description">
           Here's a button back home, for those of you who are too lazy to use a navigation bar:
         </p>
+        <router-link to="/" custom v-slot="{navigate}">
+          <button @click="navigate" class="novecento button">index</button>
+        </router-link>
       </div>
-      <div class="index-summary-graphic">
+      <div class="index-summary-graphic mobile-hide">
         <img class="index-summary-image" src="/assets/pinchfist.png" alt="Pinchfist image"/>
       </div>
     </div>
