@@ -46,6 +46,9 @@ export default {
 <style scoped>
 
 nav {
+  top: 0;
+  position: sticky;
+  z-index: 2;
   background-color: var(--bg-accent);
   display: flex;
   justify-content: space-between;
@@ -65,7 +68,7 @@ nav {
 
 .nav-group-right {
   flex: 1;
-  justify-content: right;
+  justify-content: flex-end;
 }
 
 img {

@@ -31,12 +31,19 @@ export default {
     $route: {
       immediate: true,
       handler(to) {
+        document.title = `DFC | ${to.name}` || 'DFC';
         if(to.meta.auth === true) {
           if(this.$store.state.userSession == null) {
             this.$router.push({ name: 'Log In'})
           }
         }
-        document.title = `DFC | ${to.name}` || 'DFC';
+        if(to.name !== "Index") {
+          document.getElementsByTagName("body")[0]
+              .classList.add("body-color")
+        } else {
+          document.getElementsByTagName("body")[0]
+              .classList.remove("body-color")
+        }
       }
     },
   },
@@ -61,6 +68,14 @@ export default {
     }
   }
 }
+/*        if(to.name !== "Index") {
+          document.getElementsByTagName("body")[0]
+              .setAttribute("style", "background: var(--bg); transition: 2s;")
+        } else {
+          document.getElementsByTagName("body")[0]
+              .setAttribute("style", "")
+        }*/
+
 </script>
 
 <style lang="css">
@@ -77,12 +92,41 @@ export default {
   --footer-text: #979797;
 }
 
-html, body {
-  background-color: var(--bg);
+html {
   font-size: 25px;
-  width: 100%;
   margin: 0;
-  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
+  position: relative;
+  background-color: var(--bg);
+}
+
+body:after {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  opacity: 1;
+  background-image: url("/assets/bg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top center;
+  background-size: cover;
+  transition: 0.25s;
+}
+
+.body-color:after {
+  opacity: 0;
+  transition: 0.25s;
 }
 
 #app {
@@ -104,117 +148,9 @@ main {
   margin: 0;
 }
 
-.index-summary {
-  position: relative;
-  padding: 0rem 2rem 2rem;
-  background-color: var(--bg-accent);
-  width: 90%;
-}
-.index-summary-text {
-  width: 60%;
-}
-.index-summary-graphic {
-  background-color: var(--dark-red);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  height: 100%;
-  position: absolute;
-  transform: translate(1rem, 1rem);
-  top: 0;
-  right: 0;
-}
-
-.index-summary-image {
-  height: 80%;
-  width: 80%;
-  object-fit: contain;
-}
-
-.heading {
-  margin-top: 1rem;
-  color: white;
-  font-size: 2.5rem;
-}
-
-.description {
-  color: white;
-  line-height: 150%;
-  font-size: 1.5rem;
-}
-
-.button {
-  color: white;
-  padding-bottom: .7rem;
-  border: none;
-  font-size: 2.5rem;
-  background-color: var(--dark-red);
-  min-width: 50%;
-}
-
-@media only screen and (max-width: 1500px) {
-  .heading {
-    font-size: 1.85rem;
-  }
-  .description {
-    font-size: 1.3rem;
-  }
-
-  .button {
-    min-width: 80%;
-    font-size: 2rem;
-  }
-}
-
-/* Mobile viewports */
 @media only screen and (max-width: 950px) {
   .mobile-hide {
     display: none !important;
-  }
-
-  .index-summary {
-    width: 100%;
-  }
-
-  .index-summary-text {
-    position: relative;
-    padding-bottom: 1.5rem;
-    width: 100%;
-  }
-
-  .heading {
-    font-size: 1.5rem;
-  }
-  .description {
-    font-size: 0.8rem;
-  }
-
-  .button {
-    position: absolute;
-    margin-left: auto;
-    min-width: 80%;
-    font-size: 1.5rem;
-    padding-bottom: .4rem;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  nav {
-    height: 4rem !important;
-  }
-}
-
-/* Button hover effect on non-mobile viewports */
-@media only screen and (min-width: 950px) {
-  .button:hover {
-    cursor: pointer;
-    transform: scale(1.02);
-    transition: .2s;
-  }
-
-  .button:active {
-    transform: scale(0.98);
   }
 }
 </style>
