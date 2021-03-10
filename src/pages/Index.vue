@@ -14,7 +14,7 @@
           If you play Forts and would like to be a part of our community, consider joining us:
         </p>
         <router-link to="/join" custom v-slot="{navigate}">
-          <button @click="navigate" class="novecento join-button">join us</button>
+          <button @click="navigate" class="novecento block-button">join us</button>
         </router-link>
       </div>
       <div class="index-block-graphic mobile-hide">
@@ -24,9 +24,8 @@
     <div class="index-block">
       <div class="index-news-text">
         <h1 class="novecento heading">latest news</h1>
-        <h1 class="novecento heading-news" v-html="sanitizeHeading()"></h1>
-        <p class="fira description" v-html="sanitizeText()">
-        </p>
+        <h1 class="novecento heading-news" v-once v-html="sanitizeHeading()"></h1>
+        <p class="fira description" v-once v-html="sanitizeText()"></p>
       </div>
     </div>
   </main>
@@ -41,7 +40,6 @@ export default {
       news: this.$store.getters.latestNews
     }
   },
-
   methods: {
     sanitizeHeading() {
       return this.news ?
@@ -85,7 +83,11 @@ main {
 }
 
 .index-block:not(:first-child) {
-  margin: 4rem 0;
+  margin-top: 4rem;
+}
+
+.index-block:last-child {
+  margin-bottom: 4rem;
 }
 
 .index-block-text {
@@ -127,7 +129,7 @@ main {
   font-size: 1.3rem;
 }
 
-.join-button {
+.block-button {
   color: white;
   padding-bottom: .7rem;
   border: none;
@@ -141,7 +143,11 @@ main {
     font-size: 1.85rem;
   }
 
-  .join-button {
+  .heading-news {
+    font-size: 1.3rem;
+  }
+
+  .block-button {
     font-size: 2rem;
   }
 }
@@ -161,11 +167,16 @@ main {
   .heading {
     font-size: 1.5rem;
   }
+
+  .heading-news {
+    font-size: 1.1rem;
+  }
+
   .description {
     font-size: 0.8rem;
   }
 
-  .join-button {
+  .block-button {
     position: absolute;
     margin-left: auto;
     min-width: 80%;
@@ -180,7 +191,7 @@ main {
   }
 
   .index-block:not(:first-child) {
-    margin: 2rem 0;
+    margin-top: 2rem;
   }
 }
 

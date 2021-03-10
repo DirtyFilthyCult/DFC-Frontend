@@ -117,4 +117,8 @@ main {
     display: none !important;
   }
 }
+
+.button {
+  background-color: white !important;
+}
 </style>

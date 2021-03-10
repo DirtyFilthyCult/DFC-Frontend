@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Router from 'vue-router'
 import VuePageTransition from 'vue-page-transition'
-import VueSanitize from "vue-sanitize"
 import VueCookies from "vue-cookies"
+import VueSanitize from "vue-sanitize"
 
 import App from './App.vue'
 import Index from "./pages/Index.vue"
@@ -16,10 +16,12 @@ import NotFound from "./pages/NotFound.vue"
 import axios from "axios"
 
 Vue.config.productionTip = false
+Vue.config.ignoredElements = ['widgetbot']
+
 Vue.use(Router)
 Vue.use(Vuex)
-Vue.use(VueSanitize)
 Vue.use(VueCookies)
+Vue.use(VueSanitize)
 Vue.use(VuePageTransition)
 Vue.prototype.axios = axios
 
@@ -74,7 +76,6 @@ const store = new Vuex.Store({
     loggedIn: false,
     userData: null
   },
-
   getters: {
     latestNews: state => state.news ? (state.news[0] ?? null) : null,
     fullNews: state => state.news || null,
@@ -132,7 +133,7 @@ const store = new Vuex.Store({
 })
 
 /* eslint-disable no-unused-vars */
-const app = new Vue({
+new Vue({
   el: "#app",
   render: h => h(App),
   router,
@@ -148,13 +149,16 @@ const app = new Vue({
     this.apiGet('setNews', 'api/news', {limit: "15"})
   },
   methods: {
-    apiGet(commitType, endpoint, params = null, action = false) {
+    apiGet: function (commitType, endpoint, params = null, action = false) {
       this.axios.get(window.location.href + endpoint, {
         params: params
       }).then(response => {
-        action ? this.$store.commit(commitType, response.data) : this.$store.dispatch(commitType, response.data)
+        // This is ugly, but due to the way that routing works, requesting /api on a development server
+        // will resolve to the 404 page and try to set store data to raw HTML
+        if(response.data.startsWith("<")) return
+        !action ? this.$store.commit(commitType, response.data) : this.$store.dispatch(commitType, response.data)
       }).catch(_ => {
-        action ? this.$store.commit(commitType, null) : this.$store.dispatch(commitType, null)
+        !action ? this.$store.commit(commitType, null) : this.$store.dispatch(commitType, null)
         console.log(`Unable to fetch data from endpoint: ${endpoint}`)
       })
     }
