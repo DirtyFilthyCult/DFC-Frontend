@@ -24,8 +24,8 @@
     <div class="index-block">
       <div class="index-news-text">
         <h1 class="novecento heading">latest news</h1>
-        <h1 class="novecento heading-news">{{ news ? news.heading : 'could not grab news from server'}}</h1>
-        <p class="fira description" v-html="news ? news.text : 'Please try reloading the page. If this does not fix the problem, contact the website administrator.'">
+        <h1 class="novecento heading-news" v-html="sanitizeHeading()"></h1>
+        <p class="fira description" v-html="sanitizeText()">
         </p>
       </div>
     </div>
@@ -38,7 +38,20 @@ export default {
 
   data() {
     return {
-      news: null
+      news: this.$store.getters.latestNews
+    }
+  },
+
+  methods: {
+    sanitizeHeading() {
+      return this.news ?
+          this.$sanitize(this.news.heading) :
+          'could not grab news from server'
+    },
+    sanitizeText() {
+      return this.news ?
+          this.$sanitize(this.news.text) :
+          'Please try reloading the page. If this does not fix the problem, contact the website administrator.'
     }
   }
 }
@@ -62,7 +75,7 @@ main {
 
 .index-block {
   position: relative;
-  padding: 0rem 2rem 2rem;
+  padding: 0 2rem 2rem;
   background-color: rgba(36, 36, 36, 0.95);
   width: 90%;
 }

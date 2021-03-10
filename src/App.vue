@@ -10,7 +10,6 @@
 
 <script>
 
-import axios from "axios"
 import Navigation from "./components/Navigation"
 import Footer from "./components/Footer"
 
@@ -20,13 +19,6 @@ export default {
     Navigation,
     Footer
   },
-
-  data() {
-    return {
-      newsEndpoint: '/api/news'
-    }
-  },
-
   watch: {
     $route: {
       immediate: true,
@@ -46,36 +38,8 @@ export default {
         }
       }
     },
-  },
-
-  created() {
-    this.getNews()
-  },
-
-  methods: {
-    getNews() {
-      axios.get(this.newsEndpoint, {
-        params: {
-          limit: "15"
-        }
-      })
-        .then(response => {
-          this.$store.commit('setNews', response.data)
-        })
-        .catch(_ => {
-          console.log("Could not fetch latest news data.")
-        })
-    }
   }
 }
-/*        if(to.name !== "Index") {
-          document.getElementsByTagName("body")[0]
-              .setAttribute("style", "background: var(--bg); transition: 2s;")
-        } else {
-          document.getElementsByTagName("body")[0]
-              .setAttribute("style", "")
-        }*/
-
 </script>
 
 <style lang="css">

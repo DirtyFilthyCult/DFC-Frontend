@@ -13,7 +13,9 @@
     "vuex": "latest",
     "vue-router": "latest",
     "axios": "latest",
-    "vue-page-transition": "latest"
+    "vue-page-transition": "latest",
+    "vue-sanitize": "latest",
+    "vue-cookies": "latest"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
