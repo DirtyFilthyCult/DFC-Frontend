@@ -15,7 +15,8 @@
     "vue-page-transition": "latest",
     "vue-router": "latest",
     "vue-sanitize": "latest",
-    "vuex": "latest"
+    "vuex": "latest",
+    "uuid": "latest"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

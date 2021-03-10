@@ -2,7 +2,7 @@
   <nav>
     <div class="nav-group">
       <router-link to="/" custom v-slot="{navigate}">
-        <img @click="navigate" src="/assets/logo.png" alt="DFC Logo"/>
+        <img @click="navigate" src="/assets/logo.jpg" alt="DFC Logo"/>
       </router-link>
       <router-link to="/" custom v-slot="{navigate}" class="mobile-hide">
         <a @click="navigate" class="novecento text text-dfc">dfc</a>

@@ -14,9 +14,9 @@ import Login from "./pages/Login.vue"
 import Profile from "./pages/Login.vue"
 import NotFound from "./pages/NotFound.vue"
 import axios from "axios"
+import { v4 as uuid } from "uuid"
 
 Vue.config.productionTip = false
-Vue.config.ignoredElements = ['widgetbot']
 
 Vue.use(Router)
 Vue.use(Vuex)
@@ -74,13 +74,15 @@ const store = new Vuex.Store({
     news: null,
     userSession: null,
     loggedIn: false,
-    userData: null
+    userData: null,
+    tempUUID: null
   },
   getters: {
     latestNews: state => state.news ? (state.news[0] ?? null) : null,
     fullNews: state => state.news || null,
     userSession: state => state.userSession || null,
-    userData: state => state.userData || null
+    userData: state => state.userData || null,
+    tempUUID: state => state.tempUUID || null
   },
 
   mutations: {
@@ -89,7 +91,8 @@ const store = new Vuex.Store({
     setUserSession: (state, payload) => {
       state.userSession = payload
       state.loggedIn = (payload !== null)
-    }
+    },
+    generateTempUUID: (state) => state.tempUUID = uuid()
   },
   actions: {
     async grabSessionFromCookie(context) {
@@ -128,6 +131,25 @@ const store = new Vuex.Store({
           console.log("Invalid refresh response from server; this is probably a bug")
         }
       }
+    },
+    async oauthInitiate(context) {
+      let url = "https://discord.com/api/oauth2/authorize?client_id=819334913131020348&redirect_uri=https%3A%2F%2Fdirtyfilthycu.lt%2Fapi%2FoauthReturn&response_type=code&scope=identify%20guilds"
+      url = url + `&state=${context.getters.tempUUID}`
+      window.open(url, '_blank')
+      this._vm.axios.post(window.location.href + "/api/oauthInitiate", {
+        params: {
+          state: context.getters.tempUUID
+        }})
+          .then(response => {
+            console.log("OAuth token received")
+            context.commit('setUserSession', response.data.token)
+            this._vm.$cookies.set("user-session", response.data.token)
+            this._vm.$router.push("/")
+            window.location.reload()
+          })
+          .catch(() => {
+            console.log("Error encountered during OAuth request.")
+          })
     }
   }
 })
@@ -143,7 +165,7 @@ new Vue({
     this.$store.dispatch('grabSessionFromCookie').then(() => {
       if(this.$store.getters.userSession !== null) {
         console.log("Refreshing session")
-        this.apiGet('updateSession', 'api/updateSession', {current: this.$store.getters}, true)
+        this.apiGet('updateSession', 'api/oauthRefresh', {current: this.$store.getters}, true)
       } else console.log("Skipping session refresh")
     })
     this.apiGet('setNews', 'api/news', {limit: "15"})
