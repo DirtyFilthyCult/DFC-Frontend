@@ -36,13 +36,14 @@ export default {
           document.getElementsByTagName("body")[0]
               .classList.remove("body-color")
         }
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       }
     },
   }
 }
 </script>
 
-<style lang="css">
+<style>
 
 * {
   box-sizing: border-box;
@@ -94,6 +95,7 @@ body:after {
 }
 
 #app {
+  height: 100%;
 }
 
 .novecento {
@@ -109,6 +111,7 @@ body:after {
 }
 
 main {
+  min-height: 34.5rem;
   margin: 0;
 }
 

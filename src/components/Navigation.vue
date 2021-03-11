@@ -10,22 +10,22 @@
     </div>
     <div class="nav-group nav-group-right mobile-hide">
       <router-link to="/titles" custom v-slot="{navigate}">
-        <a @click="navigate" class="novecento text text-dfc">titles</a>
+        <a @click="navigate" class="novecento text" :class="{current: isCurrent('titles')}">titles</a>
       </router-link>
       <router-link to="/steam" custom v-slot="{navigate}">
-        <a @click="navigate" class="novecento text">steam</a>
+        <a @click="navigate" class="novecento text" :class="{current: isCurrent('steam')}">steam</a>
       </router-link>
       <router-link to="/join" custom v-slot="{navigate}">
-        <a @click="navigate" class="novecento text">join us</a>
+        <a @click="navigate" class="novecento text" :class="{current: isCurrent('join us')}">join us</a>
       </router-link>
       <div id="nav-divider">
 
       </div>
       <router-link to="/login" custom v-slot="{navigate}" v-if="!loggedIn">
-        <a @click="navigate" class="novecento text">log in</a>
+        <a @click="navigate" class="novecento text" :class="{current: isCurrent('log in')}">log in</a>
       </router-link>
       <router-link to="/profile" custom v-slot="{navigate}" v-else>
-        <a @click="navigate" class="novecento text">profile</a>
+        <a @click="navigate" class="novecento text" :class="{current: isCurrent('profile')}">profile</a>
       </router-link>
     </div>
 
@@ -37,13 +37,22 @@ import {mapState} from "vuex";
 
 export default {
   name: 'Navigation',
-  computed: mapState([
-    'loggedIn'
-  ])
+  computed: mapState(['loggedIn']),
+  methods: {
+    isCurrent(name) {
+      return name.toLowerCase() === this.$route.name.toLowerCase()
+    }
+  }
 }
 </script>
 
 <style scoped>
+
+.current {
+  line-height: 0.6;
+  border-bottom: 3px solid var(--bright-red);
+  margin-bottom: -0.125rem;
+}
 
 nav {
   top: 0;

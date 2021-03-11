@@ -50,7 +50,7 @@ main {
 }
 
 .disabled {
-  transform: scale(1.02);
+  transform: scale(1.00);
   filter: brightness(50%);
 }
 

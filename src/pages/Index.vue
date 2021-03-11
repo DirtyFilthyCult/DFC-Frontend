@@ -90,6 +90,7 @@ main {
   padding: 0 2rem 2rem;
   background-color: var(--bg-accent);
   width: 90%;
+  height: 0%;
 }
 
 .transparent {
@@ -220,14 +221,18 @@ main {
 
 /* Button hover effect on non-mobile viewports */
 @media only screen and (min-width: 950px) {
+  button {
+    transition: .2s
+  }
   button:hover {
     cursor: pointer;
-    transform: scale(1.02);
+    transform: scale(1.04);
     transition: .2s;
   }
 
   button:active {
     transform: scale(0.98);
+
   }
 }
 </style>

@@ -5,7 +5,7 @@
         <h1 class="novecento heading">
           404</h1>
         <p class="fira description">
-          The page you requested either does not exist or Joe forgot to implement it again.
+          We're sorry, but Cronkhina-chan has nuked this page with the sheer power of his weebery.
         </p>
         <p class="fira description">
           Here's a button back home, for those of you who are too lazy to use a navigation bar:

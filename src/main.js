@@ -68,9 +68,14 @@ const router = new Router({
       component: Privacy
     },
     {
-      path: '*',
+      path: "/404",
       name: "Not Found",
       component: NotFound
+    },
+    {
+      path: '*',
+      name: "Redirect",
+      redirect: "/404"
     }
   ]
 })
@@ -116,21 +121,18 @@ const store = new Vuex.Store({
           console.log("Session is valid")
           context.commit('setUserSession', payload.token)
           this._vm.apiGet('setUserData', '/api/userData', {token: payload.token})
-          window.location.reload()
           break
         }
         case "refresh": {
           console.log("New token received from server; setting user token")
           context.commit('setUserSession', payload.token)
           this._vm.$cookies.set("user-session", payload.token)
-          window.location.reload()
           break
         }
         case "invalid": {
           console.log("Session is invalid; new login required")
           context.commit('setUserSession', null)
           this._vm.$cookies.remove("user-session")
-          window.location.reload()
           break
         }
         default: {
@@ -142,12 +144,9 @@ const store = new Vuex.Store({
       let url = "https://discord.com/api/oauth2/authorize?client_id=819334913131020348&redirect_uri=https%3A%2F%2Fdirtyfilthycu.lt%2Fapi%2FoauthReturn&response_type=code&scope=identify%20guilds"
       url = url + `&state=${context.getters.tempUUID}`
       window.open(url, '_blank')
-      this._vm.axios.post(window.location.href + "/api/oauthInitiate", {
-        params: {
-          state: context.getters.tempUUID
-        }})
+      this._vm.axios.get("https://dirtyfilthycu.lt/api/oauthInitiate", {
+        params: {state: context.getters.tempUUID}})
           .then(response => {
-            if(response.data.startsWith("<")) return
             console.log("OAuth token received")
             context.commit('setUserSession', response.data.token)
             this._vm.$cookies.set("user-session", response.data.token)
@@ -178,11 +177,9 @@ new Vue({
   },
   methods: {
     apiGet: function (commitType, endpoint, params = null, action = false) {
-      this.axios.get(window.location.href + endpoint, {
+      this.axios.get("https://dirtyfilthycu.lt/" + endpoint, {
         params: params
       }).then(response => {
-        // This is ugly, but due to the way that routing works, requesting /api on a development server
-        // will resolve to the 404 page and try to set store data to raw HTML
         if(response.data.startsWith("<")) return
         !action ? this.$store.commit(commitType, response.data) : this.$store.dispatch(commitType, response.data)
       }).catch(_ => {
