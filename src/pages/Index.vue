@@ -1,10 +1,11 @@
 <template>
   <main>
-    <div class="index-block">
+    <div class="index-block transparent">
       <div class="index-block-text">
         <h1 class="novecento heading">
           the largest unofficial
           forts community</h1>
+        <hr class="small-rule">
         <p class="fira description">
           The Dirty Filthy Cult is the largest unofficial community for
           <a href="https://www.earthworkgames.com/" target = "_blank" style="color: white;">FORTS</a>,
@@ -21,10 +22,11 @@
         <img class="index-block-image" src="/assets/pinchfist.png" alt="Pinchfist image"/>
       </div>
     </div>
-    <div class="index-block">
-      <div class="index-news-text">
+    <div class="index-block transparent">
+      <div class="index-block-text-full">
         <h1 class="novecento heading">latest news</h1>
-        <h1 class="novecento heading-news" v-once v-html="sanitizeHeading()"></h1>
+        <hr class="small-rule">
+        <h2 class="novecento heading-small" v-once v-html="sanitizeHeading()"></h2>
         <p class="fira description" v-once v-html="sanitizeText()"></p>
       </div>
     </div>
@@ -66,7 +68,19 @@ main {
 </style>
 
 <style>
-.heading-news {
+.large-rule {
+  background-color: var(--bg);
+  height: 5px;
+  border: none;
+}
+
+.small-rule {
+  background-color: var(--bg);
+  height: 3px;
+  border: none;
+}
+
+.heading-small {
   color: white;
   font-size: 1.5rem;
 }
@@ -74,8 +88,12 @@ main {
 .index-block {
   position: relative;
   padding: 0 2rem 2rem;
-  background-color: rgba(36, 36, 36, 0.95);
+  background-color: var(--bg-accent);
   width: 90%;
+}
+
+.transparent {
+  background-color: rgba(36, 36, 36, 0.95) !important;
 }
 
 .index-block:first-child {
@@ -94,7 +112,7 @@ main {
   width: 60%;
 }
 
-.index-news-text {
+.index-block-text-full {
   width: 100%;
 }
 
@@ -129,6 +147,11 @@ main {
   font-size: 1.3rem;
 }
 
+.description dt {
+  margin-top: 0;
+  font-weight: bold;
+}
+
 .block-button {
   color: white;
   padding-bottom: .7rem;
@@ -143,7 +166,7 @@ main {
     font-size: 1.85rem;
   }
 
-  .heading-news {
+  .heading-small {
     font-size: 1.3rem;
   }
 
@@ -168,7 +191,7 @@ main {
     font-size: 1.5rem;
   }
 
-  .heading-news {
+  .heading-small {
     font-size: 1.1rem;
   }
 

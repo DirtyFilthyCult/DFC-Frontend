@@ -12,6 +12,7 @@ import Steam from "./pages/Steam.vue"
 import Join from "./pages/Join.vue"
 import Login from "./pages/Login.vue"
 import Profile from "./pages/Login.vue"
+import Privacy from "./pages/Privacy.vue"
 import NotFound from "./pages/NotFound.vue"
 import axios from "axios"
 import { v4 as uuid } from "uuid"
@@ -60,6 +61,11 @@ const router = new Router({
       meta: {
         auth: true
       }
+    },
+    {
+      path: "/privacy",
+      name: "Privacy",
+      component: Privacy
     },
     {
       path: '*',
@@ -145,7 +151,6 @@ const store = new Vuex.Store({
             context.commit('setUserSession', response.data.token)
             this._vm.$cookies.set("user-session", response.data.token)
             this._vm.$router.push("/")
-            window.location.reload()
           })
           .catch(() => {
             console.log("Error encountered during OAuth request.")
