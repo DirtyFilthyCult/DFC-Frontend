@@ -147,6 +147,7 @@ const store = new Vuex.Store({
           state: context.getters.tempUUID
         }})
           .then(response => {
+            if(response.data.startsWith("<")) return
             console.log("OAuth token received")
             context.commit('setUserSession', response.data.token)
             this._vm.$cookies.set("user-session", response.data.token)
