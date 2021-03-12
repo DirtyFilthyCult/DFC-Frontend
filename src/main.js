@@ -15,7 +15,6 @@ import Profile from "./pages/Login.vue"
 import Privacy from "./pages/Privacy.vue"
 import NotFound from "./pages/NotFound.vue"
 import axios from "axios"
-import { v4 as uuid } from "uuid"
 
 Vue.config.productionTip = false
 
@@ -86,14 +85,12 @@ const store = new Vuex.Store({
     userSession: null,
     loggedIn: false,
     userData: null,
-    tempUUID: null
   },
   getters: {
     latestNews: state => state.news ? (state.news[0] ?? null) : null,
     fullNews: state => state.news || null,
     userSession: state => state.userSession || null,
-    userData: state => state.userData || null,
-    tempUUID: state => state.tempUUID || null
+    userData: state => state.userData || null
   },
 
   mutations: {
@@ -102,8 +99,8 @@ const store = new Vuex.Store({
     setUserSession: (state, payload) => {
       state.userSession = payload
       state.loggedIn = (payload !== null)
-    },
-    generateTempUUID: (state) => state.tempUUID = uuid()
+      this._vm.$cookies.set("user-session", payload)
+    }
   },
   actions: {
     async grabSessionFromCookie(context) {
@@ -115,18 +112,12 @@ const store = new Vuex.Store({
       }
       context.commit('setUserSession', userSession)
     },
-    async updateSession(context, payload) {
+    updateSession(context, payload) {
       switch(payload.type) {
         case "valid": {
           console.log("Session is valid")
           context.commit('setUserSession', payload.token)
           this._vm.apiGet('setUserData', '/api/userData', {token: payload.token})
-          break
-        }
-        case "refresh": {
-          console.log("New token received from server; setting user token")
-          context.commit('setUserSession', payload.token)
-          this._vm.$cookies.set("user-session", payload.token)
           break
         }
         case "invalid": {
@@ -139,22 +130,10 @@ const store = new Vuex.Store({
           console.log("Invalid refresh response from server; this is probably a bug")
         }
       }
+      this._vm.$router.push({ name: "Index" })
     },
-    async oauthInitiate(context) {
-      let url = "https://discord.com/api/oauth2/authorize?client_id=819334913131020348&redirect_uri=https%3A%2F%2Fdirtyfilthycu.lt%2Fapi%2FoauthReturn&response_type=code&scope=identify%20guilds"
-      url = url + `&state=${context.getters.tempUUID}`
-      window.open(url, '_blank')
-      this._vm.axios.get("https://dirtyfilthycu.lt/api/oauthInitiate", {
-        params: {state: context.getters.tempUUID}})
-          .then(response => {
-            console.log("OAuth token received")
-            context.commit('setUserSession', response.data.token)
-            this._vm.$cookies.set("user-session", response.data.token)
-            this._vm.$router.push("/")
-          })
-          .catch(() => {
-            console.log("Error encountered during OAuth request.")
-          })
+    async oauthInitiate() {
+      window.location.href = "https://discord.com/api/oauth2/authorize?client_id=819334913131020348&redirect_uri=https%3A%2F%2Fdirtyfilthycu.lt%2Flogin&response_type=token&scope=identify%20guilds"
     }
   }
 })
@@ -166,11 +145,11 @@ new Vue({
   router,
   store,
   created() {
-    this.$cookies.config(Infinity, '', '',true)
+    this.$cookies.config("7d", '', '',true)
     this.$store.dispatch('grabSessionFromCookie').then(() => {
       if(this.$store.getters.userSession !== null) {
         console.log("Refreshing session")
-        this.apiGet('updateSession', 'api/oauthRefresh', {current: this.$store.getters}, true)
+        this.apiGet('validateSession', 'oauth/validate', {current: this.$store.getters}, true)
       } else console.log("Skipping session refresh")
     })
     this.apiGet('setNews', 'api/news', {limit: "15"})

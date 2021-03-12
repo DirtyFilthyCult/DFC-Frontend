@@ -29,12 +29,17 @@ export default {
   methods: {
     logIn() {
       const button = document.querySelector("#loginButton")
-      this.$store.commit('generateTempUUID')
       this.$store.dispatch('oauthInitiate')
 
       button.disabled = true
       button.classList.add("disabled")
       button.innerHTML = "waiting..."
+    }
+  },
+  created() {
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    if (fragment.has("access_token")) {
+      this.$store.commit('setUserSession', fragment.get("access_token"))
     }
   }
 }
