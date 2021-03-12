@@ -36,10 +36,9 @@
 <script>
 export default {
   name: "Index",
-
-  data() {
-    return {
-      news: this.$store.getters.latestNews
+  computed: {
+    news() {
+      return this.$store.getters.latestNews
     }
   },
   methods: {
