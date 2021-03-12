@@ -159,11 +159,10 @@ new Vue({
       this.axios.get("https://dirtyfilthycu.lt/" + endpoint, {
         params: params
       }).then(response => {
-        if(response.data.startsWith("<")) return
         !action ? this.$store.commit(commitType, response.data) : this.$store.dispatch(commitType, response.data)
-      }).catch(_ => {
+      }).catch(e => {
         !action ? this.$store.commit(commitType, null) : this.$store.dispatch(commitType, null)
-        console.log(`Unable to fetch data from endpoint: ${endpoint}`)
+        console.log(`Unable to fetch data from endpoint: ${endpoint} ` + e)
       })
     }
   }

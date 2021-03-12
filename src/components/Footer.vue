@@ -21,10 +21,10 @@
             <i @click="navigate" class="fab fa-discord fa-2x"/>
         </router-link></li>
         <li>
-          <a href="https://steamcommunity.com/groups/DirtyFilthyCult" target="_blank"><i class="fab fa-steam fa-2x"></i></a>
+          <a href="https://dirtyfilthycu.lt/steam" target="_blank"><i class="fab fa-steam fa-2x"></i></a>
         </li>
         <li>
-          <a href="https://github.com/DirtyFilthyCult" target="_blank"><i class="fab fa-github fa-2x"></i></a>
+          <a href="https://dirtyfilthycu.lt/github" target="_blank"><i class="fab fa-github fa-2x"></i></a>
         </li>
       </ul>
     </div>
