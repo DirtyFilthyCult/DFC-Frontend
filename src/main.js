@@ -159,7 +159,6 @@ new Vue({
       this.axios.get("https://dirtyfilthycu.lt/" + endpoint, {
         params: params
       }).then(response => {
-        console.log(response.data)
         !action ? this.$store.commit(commitType, response.data) : this.$store.dispatch(commitType, response.data)
       }).catch(e => {
         !action ? this.$store.commit(commitType, null) : this.$store.dispatch(commitType, null)

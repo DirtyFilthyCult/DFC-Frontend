@@ -26,31 +26,35 @@
       <div class="index-block-text-full">
         <h1 class="novecento heading">latest news</h1>
         <hr class="small-rule">
-        <h2 class="novecento heading-small" v-once v-html="sanitizeHeading()"></h2>
-        <p class="fira description" v-once v-html="sanitizeText()"></p>
+        <h2 class="novecento heading-small" v-html="heading"></h2>
+        <p class="fira description" v-html="text"></p>
       </div>
     </div>
   </main>
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   name: "Index",
-  computed: {
-    news() {
-      return this.$store.getters.latestNews
+  data() {
+    return {
+      heading: 'placeholder',
+      text: 'placeholder'
     }
   },
-  methods: {
-    sanitizeHeading() {
-      return this.news ?
-          this.$sanitize(this.news.heading) :
-          'could not grab news from server'
-    },
-    sanitizeText() {
-      return this.news ?
-          this.$sanitize(this.news.text) :
-          'Please try reloading the page. If this does not fix the problem, contact the website administrator.'
+  computed: mapState(['news']),
+  watch: {
+    news() {
+      this.heading = this.$sanitize(this.$store.getters.latestNews.heading)
+      this.text = this.$sanitize(this.$store.getters.latestNews.text)
+    }
+  },
+  created() {
+    if(this.$store.getters.latestNews !== null) {
+      this.heading = this.$sanitize(this.$store.getters.latestNews.heading)
+      this.text = this.$sanitize(this.$store.getters.latestNews.text)
     }
   }
 }
